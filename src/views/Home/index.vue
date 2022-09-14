@@ -1,19 +1,74 @@
 <template>
   <div>
+    <!-- 推荐歌单 -->
     <p class="title">推荐歌单</p>
-    <van-row>
-      <van-col span="7" offset="1">span: 8</van-col>
-      <van-col span="7" offset="1">span: 8</van-col>
-      <van-col span="7" offset="1">span: 8</van-col>
+    <van-row gutter="10">
+      <van-col
+        span="8"
+        v-for="(item, index) in recommendMusicList"
+        :key="item.id"
+      >
+        <van-image
+          width="100%"
+          height="100"
+          lazy-load
+          fit="cover"
+          :src="item.picUrl"
+        />
+        <p class="song_name">{{ item.name }}</p>
+      </van-col>
     </van-row>
+    <!-- 最新音乐 -->
+    <p class="title">最新音乐</p>
+    <van-cell-group :border="false">
+      <van-cell center v-for="(item, index) in newMusicList" :key="item.id">
+        <template #title>
+          {{ item.name }}
+        </template>
+        <template #right-icon>
+          <van-icon name="play-circle-o" size="0.6rem" />
+        </template>
+
+        <template #label>
+          <van-tag plain type="danger" v-show="item.song.sqMusic">SQ</van-tag>
+          {{ item.song.artists[0].name }} - {{ item.song.album.name }}
+        </template>
+      </van-cell>
+    </van-cell-group>
   </div>
 </template>
 
 <script>
+import { recommendMusic, getNewMusic } from "@/api/Home";
 export default {
   name: "Home",
   data() {
-    return {};
+    return {
+      recommendMusicList: [],
+      newMusicList: [],
+    };
+  },
+  mounted() {
+    this.getRecommendMusic();
+
+    this.getNewMusicList();
+  },
+  methods: {
+    // 首页推荐歌单
+    async getRecommendMusic() {
+      let res = await recommendMusic(6);
+      if (res.code === 200) {
+        this.recommendMusicList = res.result;
+      }
+    },
+    // 首页推荐音乐
+    async getNewMusicList() {
+      let res = await getNewMusic();
+      // console.log(result);
+      if (res.code === 200) {
+        this.newMusicList = res.result;
+      }
+    },
   },
 };
 </script>
