@@ -46,7 +46,12 @@
       </van-cell-group>
       <!-- 搜索结果列表 -->
       <van-cell-group :border="false">
-        <van-cell>搜索 "{{ searchKeyWord }}"</van-cell>
+        <van-cell icon="search" title="1111" />
+        <van-cell icon="search" title="1111" />
+        <van-cell icon="search" title="1111" />
+        <van-cell icon="search" title="1111" />
+        <van-cell icon="search" title="1111" />
+        <van-cell icon="search" title="1111" />
       </van-cell-group>
     </div>
   </div>
@@ -100,6 +105,16 @@ export default {
     },
     // 搜索确定函数
     onSearch() {
+      if (this.searchKeyWord === "" || this.searchKeyWord.trim() === "") {
+        // Toast.fail({
+        //   duration: 1, // 持续展示 toast
+        //   forbidClick: true,
+        //   message: "请输入搜索内容",
+        // });
+        // console.log(this.$toast);
+        this.$toast.fail("请输入搜索内容");
+        return;
+      }
       const data = {
         first: this.searchKeyWord,
       };
@@ -120,7 +135,7 @@ export default {
     hotsKeyWordSearchHandler(e) {
       if (e.target.className.includes("van-tag")) {
         this.searchKeyWord = e.target.innerText;
-        this.onSearch()
+        this.onSearch();
       }
     },
     // 获取热搜关键词
@@ -130,8 +145,6 @@ export default {
         this.hotsList = res.result.hots;
       }
     },
-    // 获取搜索歌词历史
-    getLocSearchList() {},
   },
 };
 </script>

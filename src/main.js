@@ -23,6 +23,7 @@ import {
   Tag,
   Search,
   Divider,
+  Toast,
 } from "vant";
 
 Vue.use(NavBar);
@@ -38,8 +39,12 @@ Vue.use(Icon);
 Vue.use(Tag);
 Vue.use(Search);
 Vue.use(Divider);
+// Vue.use(Toast);
 
 new Vue({
   router,
+  beforeMount() {
+    this.$toast = Toast;
+  },
   render: (h) => h(App),
 }).$mount("#app");
