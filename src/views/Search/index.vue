@@ -31,7 +31,7 @@
         </div>
 
         <!-- 搜索历史 -->
-        <van-cell-group :border="false">
+        <van-cell-group :border="false" @click="musicHistoryListHandler">
           <van-cell center v-for="(item, index) in locSearchTemp" :key="index">
             <template #title> {{ item.first }} </template>
             <template #right-icon>
@@ -45,13 +45,13 @@
       </div>
       <div v-show="!isShow">
         <van-cell-group :border="false">
-          <van-cell>搜索 "{{ searchKeyWord }}"</van-cell>
+          <van-cell @click="pointSearch">搜索 "{{ searchKeyWord }}"</van-cell>
         </van-cell-group>
         <!-- 搜索结果列表 -->
         <van-loading size="30px" vertical color="#0094ff" v-show="isLoading"
           >加载中...</van-loading
         >
-        <van-cell-group :border="false">
+        <van-cell-group :border="false" @click="searchResultListHandler">
           <van-cell
             icon="search"
             v-for="(item, index) in searchSuggestList"
@@ -142,6 +142,11 @@ export default {
         );
       }
     },
+    // 点击搜索函数
+    pointSearch() {
+      this.onSearch();
+      this.isShowMusicContainer = false;
+    },
     // 搜索确定函数
     onSearch() {
       if (this.searchKeyWord === "" || this.searchKeyWord.trim() === "") {
@@ -172,6 +177,12 @@ export default {
       this.isShowMusicContainer = true;
       this.songsList = [];
     },
+    // 搜索列表结果点击处理函数
+    searchResultListHandler(e) {
+      this.searchKeyWord = e.target.innerText;
+      this.onSearch();
+      this.isShowMusicContainer = false;
+    },
     // 删除本地搜索热词
     deleteLocSearchKeyWordHandler(target) {
       this.locSearchTemp = this.locSearchTemp.filter(
@@ -181,6 +192,14 @@ export default {
         "loc_search_list",
         JSON.stringify(this.locSearchTemp)
       );
+    },
+    // 本地搜索历史点击处理
+    musicHistoryListHandler(e) {
+      if (e.target.innerText) {
+        this.searchKeyWord = e.target.innerText;
+        this.onSearch();
+        this.isShowMusicContainer = false;
+      }
     },
     // 热搜词处理函数
     hotsKeyWordSearchHandler(e) {
@@ -200,7 +219,6 @@ export default {
     // 获取搜索结果
     async getSearchMusicList() {
       let res = await reqSearchCloudMusic(this.searchKeyWord, this.offset);
-      console.log(res);
       if (res.code === 200 && res.result.songCount > 0) {
         this.songsList = res.result.songs || [];
       }
