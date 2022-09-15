@@ -21,7 +21,11 @@
     <!-- 最新音乐 -->
     <p class="title">最新音乐</p>
     <van-cell-group :border="false">
-      <SongItemVue v-for="(item, index) in newMusicList" :item="item" :key="item.id"/>
+      <SongItemVue
+        v-for="(item, index) in newMusicList"
+        :item="item"
+        :key="item.id"
+      />
     </van-cell-group>
   </div>
 </template>

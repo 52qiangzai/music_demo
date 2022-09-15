@@ -26,3 +26,15 @@ export const reqSearchMusic = (keywords, offset = 0, limit = 30, type = 1) => {
     },
   });
 };
+
+// 更全的搜索接口
+export const reqSearchCloudMusic = (keywords, offset = 0, limit = 30, type = 1) => {
+  return request.get("/cloudsearch", {
+    params: {
+      keywords,
+      offset,
+      limit,
+      type,
+    },
+  });
+};

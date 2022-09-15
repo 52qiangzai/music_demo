@@ -1,6 +1,7 @@
 <template>
   <!-- 封装内页播放组件 -->
-  <van-cell center :item="item">
+  <!-- 组件适合普通搜索接口reqSearchMusic -->
+  <van-cell center :item="item" @click="routerToPlay(item)">
     <template #title>
       {{ item.name }}
     </template>
@@ -19,6 +20,24 @@
 export default {
   props: {
     item: Object,
+  },
+  methods: {
+    routerToPlay(item) {
+      const { id, name } = item;
+      const picUrl = item.album.artist.img1v1Url;
+      const author = `${item.artists[0].name}  - ${item.album.name}`;
+      this.$router.push({
+        name: "play",
+        query: {
+          id,
+        },
+        params: {
+          picUrl,
+          name,
+          author,
+        },
+      });
+    },
   },
 };
 </script>

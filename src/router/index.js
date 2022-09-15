@@ -4,6 +4,7 @@ Vue.use(VueRouter);
 import Layout from "@/views/Layout";
 import Home from "@/views/Home";
 import Search from "@/views/Search";
+import Play from "@/views/Play";
 const routes = [
   {
     path: "/",
@@ -28,6 +29,14 @@ const routes = [
         component: Search,
         meta: {
           title: "搜索",
+        },
+      },
+      {
+        path: "play",
+        component: Play,
+        name: "play",
+        meta: {
+          title: "播放音乐",
         },
       },
     ],

@@ -65,7 +65,7 @@
       </div>
     </div>
     <!-- 音乐渲染列表 -->
-    <SongInnerItem
+    <SongItemPlus
       v-for="(item, index) in songsList"
       :key="index"
       :item="item"
@@ -74,16 +74,18 @@
 </template>
 
 <script>
-import SongInnerItem from "@/components/SongInnerItem.vue";
+// import SongInnerItem from "@/components/SongInnerItem.vue";
+import SongItemPlus from "@/components/SongItemPlus.vue";
+
 import {
   reqSearchHotKeyWord,
   reqSearchSuggestKeyWord,
-  reqSearchMusic,
+  reqSearchCloudMusic,
 } from "@/api/Search";
 export default {
   name: "Search",
   components: {
-    SongInnerItem,
+    SongItemPlus,
   },
   data() {
     return {
@@ -197,7 +199,7 @@ export default {
     },
     // 获取搜索结果
     async getSearchMusicList() {
-      let res = await reqSearchMusic(this.searchKeyWord, this.offset);
+      let res = await reqSearchCloudMusic(this.searchKeyWord, this.offset);
       console.log(res);
       if (res.code === 200 && res.result.songCount > 0) {
         this.songsList = res.result.songs || [];

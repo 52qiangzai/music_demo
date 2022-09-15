@@ -21,6 +21,9 @@ export default {
       title: "首页",
     };
   },
+  mounted() {
+    this.active = this.$route.name;
+  },
   watch: {
     $route: {
       handler: function (newVal, oldVal) {
