@@ -24,6 +24,7 @@ import {
   Search,
   Divider,
   Toast,
+  Loading,
 } from "vant";
 
 Vue.use(NavBar);
@@ -39,7 +40,7 @@ Vue.use(Icon);
 Vue.use(Tag);
 Vue.use(Search);
 Vue.use(Divider);
-// Vue.use(Toast);
+Vue.use(Loading);
 
 new Vue({
   router,

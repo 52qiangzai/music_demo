@@ -9,6 +9,7 @@
       clear-trigger="always"
       :maxlength="50"
       @search="onSearch"
+      @input="onInput"
     />
     <van-divider />
     <!-- 热门搜索 -->
@@ -45,20 +46,26 @@
         <van-cell>搜索 "{{ searchKeyWord }}"</van-cell>
       </van-cell-group>
       <!-- 搜索结果列表 -->
+      <van-loading size="30px" vertical color="#0094ff" v-show="isLoading"
+        >加载中...</van-loading
+      >
       <van-cell-group :border="false">
-        <van-cell icon="search" title="1111" />
-        <van-cell icon="search" title="1111" />
-        <van-cell icon="search" title="1111" />
-        <van-cell icon="search" title="1111" />
-        <van-cell icon="search" title="1111" />
-        <van-cell icon="search" title="1111" />
+        <van-cell
+          icon="search"
+          v-for="(item, index) in searchSuggestList"
+          :key="index"
+        >
+          <template #title>
+            {{ item.keyword }}
+          </template>
+        </van-cell>
       </van-cell-group>
     </div>
   </div>
 </template>
 
 <script>
-import { reqSearchHotKeyWord } from "@/api/Search";
+import { reqSearchHotKeyWord, reqSearchSuggestKeyWord } from "@/api/Search";
 export default {
   name: "Search",
   data() {
@@ -66,7 +73,9 @@ export default {
       searchKeyWord: "",
       isShow: true,
       hotsList: [],
+      isLoading: true,
       locSearchTemp: [],
+      searchSuggestList: [],
     };
   },
   mounted() {
@@ -83,13 +92,21 @@ export default {
     },
   },
   methods: {
-    // clearSearchKeyWord() {
-    //   console.log(1);
-    //   this.searchKeyWord = "";
-    // },
-    // inputDemo() {
-    //   console.log(11);
-    // },
+    // 搜索建议列表
+    async onInput() {
+      this.isLoading = true;
+      this.searchSuggestList = [];
+      if (this.searchKeyWord === null || this.searchKeyWord.trim() === "") {
+        this.searchSuggestList = [];
+        this.isLoading = true;
+        return;
+      }
+      let res = await reqSearchSuggestKeyWord(this.searchKeyWord);
+      if (res.code === 200) {
+        this.searchSuggestList = res.result.allMatch || [];
+        this.isLoading = false;
+      }
+    },
     // 更新本地搜索历史
     updateLocSearchList() {
       if (localStorage.getItem("loc_search_list")) {
@@ -106,12 +123,6 @@ export default {
     // 搜索确定函数
     onSearch() {
       if (this.searchKeyWord === "" || this.searchKeyWord.trim() === "") {
-        // Toast.fail({
-        //   duration: 1, // 持续展示 toast
-        //   forbidClick: true,
-        //   message: "请输入搜索内容",
-        // });
-        // console.log(this.$toast);
         this.$toast.fail("请输入搜索内容");
         return;
       }
