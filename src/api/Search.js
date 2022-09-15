@@ -14,3 +14,15 @@ export const reqSearchSuggestKeyWord = (keywords, type = "mobile") => {
     },
   });
 };
+
+// 搜索音乐
+export const reqSearchMusic = (keywords, offset = 0, limit = 30, type = 1) => {
+  return request.get("/search", {
+    params: {
+      keywords,
+      offset,
+      limit,
+      type,
+    },
+  });
+};

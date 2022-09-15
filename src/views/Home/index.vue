@@ -21,27 +21,19 @@
     <!-- 最新音乐 -->
     <p class="title">最新音乐</p>
     <van-cell-group :border="false">
-      <van-cell center v-for="(item, index) in newMusicList" :key="item.id">
-        <template #title>
-          {{ item.name }}
-        </template>
-        <template #right-icon>
-          <van-icon name="play-circle-o" size="0.6rem" />
-        </template>
-
-        <template #label>
-          <van-tag plain type="danger" v-show="item.song.sqMusic">SQ</van-tag>
-          {{ item.song.artists[0].name }} - {{ item.song.album.name }}
-        </template>
-      </van-cell>
+      <SongItemVue v-for="(item, index) in newMusicList" :item="item" :key="item.id"/>
     </van-cell-group>
   </div>
 </template>
 
 <script>
 import { recommendMusic, getNewMusic } from "@/api/Home";
+import SongItemVue from "@/components/SongItem.vue";
 export default {
   name: "Home",
+  components: {
+    SongItemVue,
+  },
   data() {
     return {
       recommendMusicList: [],
@@ -64,7 +56,6 @@ export default {
     // 首页推荐音乐
     async getNewMusicList() {
       let res = await getNewMusic();
-      // console.log(result);
       if (res.code === 200) {
         this.newMusicList = res.result;
       }
