@@ -7,12 +7,26 @@
     ></div>
     <!-- 播放页头部导航 -->
     <div class="header">
-      <!-- <van-icon
-        name="arrow-left"
-        size="20"
-        class="left-incon"
-        @click="$router.back()"
-      /> -->
+      <van-nav-bar :border="false">
+        <template #left>
+          <van-icon
+            name="arrow-left"
+            size="20"
+            @click="$router.back()"
+            class="left-incon"
+          />
+        </template>
+        <template #right>
+          <van-icon
+            name="chat-o"
+            badge="99+"
+            size="20"
+            class="right-incon"
+            color="#fff"
+            @click="routerToComment"
+          />
+        </template>
+      </van-nav-bar>
     </div>
     <!-- 留声机 - 容器 -->
     <div class="song-wrapper">
@@ -68,11 +82,7 @@ export default {
     return {
       playState: false, // 音乐播放状态(true暂停, false播放)
       id: this.$route.query.id, // 上一页传过来的音乐id
-      songInfo: {
-        author: this.$route.params.author,
-        name: this.$route.params.name,
-        picUrl: this.$route.params.picUrl,
-      }, // 歌曲信息
+      songInfo: {}, // 歌曲信息
       lyric: {}, // 歌词枚举对象(需要在js拿到歌词写代码处理后, 按照格式保存到这个对象)
       curLyric: "", // 当前显示哪句歌词
       lastLy: "", // 记录当前播放歌词
@@ -89,6 +99,7 @@ export default {
     async reqInspectMusicIsPlay(id) {
       return await reqInspectMusic(id);
     },
+    // 获取音乐相关信息
     async playMusic() {
       const { success, message } = await this.reqInspectMusicIsPlay(this.id);
       if (!success) return this.$toast.fail(message);
@@ -96,6 +107,7 @@ export default {
       if (res.code === 200) {
         // 音乐地址
         this.songInfo.url = res.data[0].url;
+        return "ok";
       }
     },
     async getMusicLyric() {
@@ -106,14 +118,15 @@ export default {
       }
       // 初始化完毕先显示零秒歌词
       this.curLyric = this.lyric[0];
+      return "ok";
     },
     _formatLyr(lyricStr) {
       // 可以看network观察歌词数据是一个大字符串, 进行拆分.
       let reg = /\[.+?\]/g; //
       let timeArr = lyricStr.match(reg); // 匹配所有[]字符串以及里面的一切内容, 返回数组
-      console.log(timeArr); // ["[00:00.000]", "[00:01.000]", ......]
+      // console.log(timeArr); // ["[00:00.000]", "[00:01.000]", ......]
       let contentArr = lyricStr.split(/\[.+?\]/).slice(1); // 按照[]拆分歌词字符串, 返回一个数组(下标为0位置元素不要,后面的留下所以截取)
-      console.log(contentArr);
+      // console.log(contentArr);
       let lyricObj = {}; // 保存歌词的对象, key是秒, value是显示的歌词
       timeArr.forEach((item, index) => {
         // 拆分[00:00.000]这个格式字符串, 把分钟数字取出, 转换成秒
@@ -127,7 +140,7 @@ export default {
         lyricObj[ms + Number(ss)] = contentArr[index];
       });
       // 返回得到的歌词对象(可以打印看看)
-      console.log(lyricObj);
+      // console.log(lyricObj);
       return lyricObj;
     },
     audioStart() {
@@ -152,12 +165,40 @@ export default {
           this.curLyric = this.lastLy;
         }
       });
+      return "ok";
+    },
+    //跳转评论页
+    routerToComment() {
+      this.$router.push({ path: "/comment", query: { id: this.id } });
     },
   },
   mounted() {
+    if (!sessionStorage.getItem("loc_music_info")) {
+      sessionStorage.setItem(
+        "loc_music_info",
+        JSON.stringify({
+          author: this.$route.params.author,
+          name: this.$route.params.name,
+          picUrl: this.$route.params.picUrl,
+        })
+      );
+    } else {
+      this.songInfo = JSON.parse(sessionStorage.getItem("loc_music_info"));
+    }
     this.playMusic();
     this.getMusicLyric();
     this.showLyric();
+
+    let result = Promise.all([
+      this.playMusic(),
+      this.getMusicLyric(),
+      this.showLyric(),
+    ]).then((res) => {
+      if (res.every((item) => item === "ok")) {
+        this.playState = true;
+        this.$refs.audio.play();
+      }
+    });
   },
 };
 </script>
@@ -165,6 +206,9 @@ export default {
 <style scoped>
 .header {
   height: 50px;
+}
+.van-nav-bar {
+  background-color: transparent;
 }
 .play {
   position: fixed;

@@ -5,10 +5,27 @@ import Layout from "@/views/Layout";
 import Home from "@/views/Home";
 import Search from "@/views/Search";
 import Play from "@/views/Play";
+import Comment from "@/views/Comment";
 const routes = [
   {
     path: "/",
     redirect: "/layout",
+  },
+  {
+    path: "/play",
+    component: Play,
+    name: "play",
+    meta: {
+      title: "播放音乐",
+    },
+  },
+  {
+    path: "/comment",
+    component: Comment,
+    name: "comment",
+    meta: {
+      title: "音乐评论",
+    },
   },
   {
     path: "/layout",
@@ -29,14 +46,6 @@ const routes = [
         component: Search,
         meta: {
           title: "搜索",
-        },
-      },
-      {
-        path: "play",
-        component: Play,
-        name: "play",
-        meta: {
-          title: "播放音乐",
         },
       },
     ],
