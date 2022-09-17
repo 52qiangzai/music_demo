@@ -1,5 +1,7 @@
 <template>
   <div>
+    <!-- 首页banner -->
+    <BannerVue :imgList="bannersList" />
     <!-- 推荐歌单 -->
     <p class="title">推荐歌单</p>
     <van-row gutter="10">
@@ -36,20 +38,25 @@
 
 <script>
 import { formatNumber_Qz } from "@/utils/myUntils";
-import { recommendMusic, getNewMusic } from "@/api/Home";
+import { recommendMusic, getNewMusic, reqBanner } from "@/api/Home";
 import SongItemVue from "@/components/SongItem.vue";
+import BannerVue from "@/components/Banner.vue";
+
 export default {
   name: "Home",
   components: {
     SongItemVue,
+    BannerVue,
   },
   data() {
     return {
       recommendMusicList: [],
       newMusicList: [],
+      bannersList: [],
     };
   },
   mounted() {
+    this.getBanner();
     this.getRecommendMusic();
 
     this.getNewMusicList();
@@ -67,6 +74,13 @@ export default {
     },
   },
   methods: {
+    // 获取首页轮播图数据
+    async getBanner() {
+      let res = await reqBanner(1);
+      if (res.code === 200) {
+        this.bannersList = res.banners;
+      }
+    },
     // 首页推荐歌单
     async getRecommendMusic() {
       let res = await recommendMusic(6);

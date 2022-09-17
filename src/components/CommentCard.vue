@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 评论人卡片组件 -->
-    <div class="commentContainer" :messageInfo="messageInfo">
+    <div class="commentContainer">
       <div class="avatar">
         <van-image
           width="2rem"

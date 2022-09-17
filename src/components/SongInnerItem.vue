@@ -1,7 +1,7 @@
 <template>
   <!-- 封装内页播放组件 -->
   <!-- 组件适合普通搜索接口reqSearchMusic -->
-  <van-cell center :item="item" @click="routerToPlay(item)">
+  <van-cell center @click="routerToPlay(item)">
     <template #title>
       {{ item.name }}
     </template>

@@ -35,3 +35,14 @@ export const reqMusicLyric = (id) => {
     },
   });
 };
+
+// 根据歌单id获取歌单音乐
+export const reqMusicListDetailById = (id, limit = 10, offset = 0) => {
+  return request.get("playlist/track/all", {
+    params: {
+      id,
+      limit,
+      offset,
+    },
+  });
+};

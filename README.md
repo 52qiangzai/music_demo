@@ -1,6 +1,41 @@
-# music_demo
+# 网易云移动端项目
 
-## Project setup
+vant2 + vue2全家桶制作
+
+[api地址](http://vue-music-api.q6q.cc/)     [api在线文档](https://neteasecloudmusicapi.vercel.app/#/?id=neteasecloudmusicapi)
+
+### 项目效果图
+
+### 首页
+
+![Snipaste_2022-09-17_12-01-24](.\ProjectpictureIntroduction\Snipaste_2022-09-17_12-01-24.png)
+
+### 最新音乐
+
+![Snipaste_2022-09-17_12-01-32](.\ProjectpictureIntroduction\Snipaste_2022-09-17_12-01-32.png)
+
+### 搜索
+
+![Snipaste_2022-09-17_12-01-47](.\ProjectpictureIntroduction\Snipaste_2022-09-17_12-01-47.png)
+
+![Snipaste_2022-09-17_12-01-39](.\ProjectpictureIntroduction\Snipaste_2022-09-17_12-01-39.png)
+
+### 播放页
+
+
+
+![Snipaste_2022-09-17_12-02-09](.\ProjectpictureIntroduction\Snipaste_2022-09-17_12-02-09.png)
+
+### 评论页
+
+![Snipaste_2022-09-17_12-02-19](.\ProjectpictureIntroduction\Snipaste_2022-09-17_12-02-19.png)
+
+### 歌单详情页
+
+![Snipaste_2022-09-17_12-02-31](.\ProjectpictureIntroduction\Snipaste_2022-09-17_12-02-31.png)
+
+![Snipaste_2022-09-17_12-02-36](.\ProjectpictureIntroduction\Snipaste_2022-09-17_12-02-36.png)
+
 ```
 yarn install
 ```
@@ -19,7 +54,3 @@ yarn build
 ```
 yarn lint
 ```
-### gitee地址
-https://gitee.com/lidongxuwork/bilibili-matching-code/tree/master/Web%E5%89%8D%E7%AB%AF/5-%E6%A1%86%E6%9E%B6/V2.x/%E9%A1%B9%E7%9B%AE/%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90/02_%E4%BB%A3%E7%A0%81/music-demo
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

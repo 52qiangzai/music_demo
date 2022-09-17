@@ -25,7 +25,9 @@ import {
   Divider,
   Toast,
   Loading,
-  Button 
+  Button,
+  Swipe,
+  SwipeItem,
 } from "vant";
 
 Vue.use(NavBar);
@@ -42,8 +44,9 @@ Vue.use(Tag);
 Vue.use(Search);
 Vue.use(Divider);
 Vue.use(Loading);
-Vue.use(Button )
-
+Vue.use(Button);
+Vue.use(Swipe);
+Vue.use(SwipeItem);
 new Vue({
   router,
   beforeMount() {
