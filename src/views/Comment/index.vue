@@ -69,7 +69,6 @@ export default {
       if (res.code === 200 && res.comments) {
         this.commentsMessageList = res.comments;
       }
-      console.log(res);
     },
     //
     async loadingMoreComments() {

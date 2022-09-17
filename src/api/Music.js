@@ -9,7 +9,16 @@ export const reqInspectMusic = (id) => {
   });
 };
 
-// 获取音乐url相关信息
+// 根据id获取音乐详细信息
+export const reqMusicAllInfo = (id) => {
+  return request.get("/song/detail", {
+    params: {
+      ids: id,
+    },
+  });
+};
+
+// 获取音乐播放url相关信息
 export const reqMusicInfo = (id) => {
   return request.get("/song/url", {
     params: {

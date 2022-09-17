@@ -22,17 +22,11 @@ export default {
   },
   methods: {
     routerToPlay(item) {
-      const { id, picUrl, name } = item;
-      const author = `${item.song.artists[0].name}  - ${item.song.album.name}`;
+      const { id } = item;
       this.$router.push({
         name: "play",
         query: {
           id,
-        },
-        params: {
-          picUrl,
-          name,
-          author,
         },
       });
     },

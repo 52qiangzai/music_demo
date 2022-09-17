@@ -70,6 +70,15 @@
       :key="index"
       :item="item"
     />
+    <!--添加更多 -->
+    <div class="btn" v-show="!isShowMusicContainer && songsList.length">
+      <van-button
+        type="primary"
+        loading-type="spinner"
+        text="加载更多"
+        @click="loadingMoreSearchMusic"
+      ></van-button>
+    </div>
   </div>
 </template>
 
@@ -223,6 +232,14 @@ export default {
         this.songsList = res.result.songs || [];
       }
     },
+    // 加载更多搜索音乐
+    async loadingMoreSearchMusic() {
+      this.offset++;
+      let res = await reqSearchCloudMusic(this.searchKeyWord, this.offset);
+      if (res.code === 200 && res.result.songCount > 0) {
+        this.songsList.push(...res.result.songs);
+      }
+    },
   },
 };
 </script>
@@ -242,5 +259,10 @@ export default {
 }
 .hotKeyWord {
   margin: 0 0 0.24rem 0.24rem;
+}
+.btn {
+  margin: 10px;
+  margin-bottom: 80px;
+  text-align: center;
 }
 </style>

@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import { reqInspectMusic, reqMusicInfo, reqMusicLyric } from "@/api/Music";
+import { reqInspectMusic, reqMusicAllInfo, reqMusicLyric } from "@/api/Music";
 export default {
   name: "play",
   data() {
@@ -103,10 +103,10 @@ export default {
     async playMusic() {
       const { success, message } = await this.reqInspectMusicIsPlay(this.id);
       if (!success) return this.$toast.fail(message);
-      let res = await reqMusicInfo(this.id);
+      let res = await reqMusicAllInfo(this.id);
       if (res.code === 200) {
-        // 音乐地址
-        this.songInfo.url = res.data[0].url;
+        this.songInfo.name = res.songs[0].al.name
+        this.songInfo.picUrl = res.songs[0].al.picUrl
         return "ok";
       }
     },
@@ -173,22 +173,11 @@ export default {
     },
   },
   mounted() {
-    if (!sessionStorage.getItem("loc_music_info")) {
-      sessionStorage.setItem(
-        "loc_music_info",
-        JSON.stringify({
-          author: this.$route.params.author,
-          name: this.$route.params.name,
-          picUrl: this.$route.params.picUrl,
-        })
-      );
-    } else {
-      this.songInfo = JSON.parse(sessionStorage.getItem("loc_music_info"));
-    }
-    this.playMusic();
-    this.getMusicLyric();
-    this.showLyric();
-
+    (this.songInfo = {
+      author: this.$route.params.author,
+      name: this.$route.params.name,
+      picUrl: this.$route.params.picUrl,
+    })
     let result = Promise.all([
       this.playMusic(),
       this.getMusicLyric(),

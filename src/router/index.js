@@ -6,6 +6,7 @@ import Home from "@/views/Home";
 import Search from "@/views/Search";
 import Play from "@/views/Play";
 import Comment from "@/views/Comment";
+import SongListDetails from "@/views/SongListDetails";
 const routes = [
   {
     path: "/",
@@ -17,6 +18,14 @@ const routes = [
     name: "play",
     meta: {
       title: "播放音乐",
+    },
+  },
+  {
+    path: "/details",
+    component: SongListDetails,
+    name: "details",
+    meta: {
+      title: "歌单详情",
     },
   },
   {
