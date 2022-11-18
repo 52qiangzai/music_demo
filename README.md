@@ -2,7 +2,7 @@
 
 vant2 + vue2全家桶制作
 
-[api地址](http://vue-music-api.q6q.cc/)     [api在线文档](https://neteasecloudmusicapi.vercel.app/#/?id=neteasecloudmusicapi)
+[在线预览地址](http://music.q6q.cc/)    [api地址](http://vue-music-api.q6q.cc/)     [api在线文档](https://neteasecloudmusicapi.vercel.app/#/?id=neteasecloudmusicapi) 
 
 ## 项目效果图
 

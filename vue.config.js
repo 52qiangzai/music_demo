@@ -4,9 +4,12 @@ module.exports = defineConfig({
   lintOnSave: false,
   devServer: {
     proxy: {
-      "/": {
+      "/api": {
         target: "http://vue-music-api.q6q.cc",
         changeOrigin: true,
+        pathRewrite: {
+          "^/api": "",
+        },
       },
     },
   },

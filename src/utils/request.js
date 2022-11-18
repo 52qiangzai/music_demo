@@ -4,7 +4,7 @@ import nprogress from "nprogress";
 import "nprogress/nprogress.css";
 // create an axios instance
 const service = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
+  baseURL: "/api", // url = base url + request url
   timeout: 5000, // request timeout
 });
 
